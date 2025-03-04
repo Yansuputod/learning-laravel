@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Post;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,7 +9,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('home', ['title' => 'Home Page']);
+    return view('home', ['title' => 'Home Page'
+    ]);
 });
 
 Route::get('/about', function () {
@@ -15,11 +18,18 @@ Route::get('/about', function () {
 });
 
 Route::get('/blog', function () {
-    return view('blog', ['title' => 'Blog Page']);
+    return view('blog', ['title' => 'Blog Page', 
+    'posts' => Post::all()
+    ]);
 });
 
 Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact Page']);
 });
 
-?>
+Route::get('/blog/{slug}', function ($slug) {
+    
+    $post = Post::find($slug);
+
+    return view('post', ['title' => 'Post', 'post' => $post]);
+});
